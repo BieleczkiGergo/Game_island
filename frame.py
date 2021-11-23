@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class game:
+class mainFrame:
     mainFrame = 0
     master = 0
     others = 0
@@ -22,4 +22,4 @@ class game:
         self.master.mainloop()
 
 
-game_main = game()
+game_main = mainFrame()
