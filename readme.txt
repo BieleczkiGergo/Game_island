@@ -8,3 +8,4 @@ Short description to the parts (that are made already):
     
   sprites:
     This would contains the sprites for the game, including moving and non-moving objects. Images are also imported here. The background is not a sprite.
+    Current workers: Gabi
