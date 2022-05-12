@@ -1,16 +1,18 @@
 import tkinter as tk
-from frame import mainFrame
 
 #Ez a fájl hülyeség, de ne töröld
 
-class rectangle:
-    posx = 0
-    posy = 0
-    width = 0
-    height = 0
-    nest = 0
+class tile:
 
-    def __init__(self, nest, position_x, position_y, width, height):
-        nest.create_polygon(position_x, position_y, position_x+width, position_y+height)
+    def __init__(self, posX, posY, image, nest, nestWidth=600, nestHeight=300, offX=0, offY=0):
+        #posX and posY : X and Y offset
+        #image : the image file to be imported (use 16*16 png)
+        #nest : canvas where the image might be put
+        self.image = tk.PhotoImage(file=image)
+        self.tile = nest.create_image(posX, posY, anchor=tk.NW, image=self.image)
+        self.nestWidth=nestWidth
+        self.nestHeight = nestHeight
+        self.nest = nest
 
-game = mainFrame()
+    def updatePos(self, offX, offY):
+        self.nest.move(self.tile, offX, offY)

@@ -1,39 +1,58 @@
 import tkinter as tk
+import sprites
 
-class mainFrame:
-    mainFrame = 0
-    master = 0
-    others = 0
-    label1 = 0
-    button1 =0
-    frames = 0
-    polygon = 0
-    def add_sprite(self, sprite):
-        pass
+MAPROW = 4
+MAPCOL = 4
 
-    def add_polygon(self, x, y, width, height):
-        self.mainFrame.create_polygon(x, y, width+x, height+y)
-
-    def start(self):
-        self.polygon = self.mainFrame.add_polygon(10, 10, 20, 20)
+class MainFrame:
 
     def __init__(self):
+        #create master
         self.master = tk.Tk()
+        #create elements
         self.mainFrame = tk.Canvas(self.master, width=600, height=300, relief=tk.GROOVE, borderwidth=2)
         self.others = tk.Frame(self.master, relief=tk.GROOVE, borderwidth=2)
         self.label1 = tk.Label(self.others, text="something: ")
         self.button1 = tk.Button(self.others, text="Start", command=self.start)
 
+        #config elements
         self.master.minsize(width=800, height=300)
+        self.tiles = []
+        self.build()
+        #self.master.bind("a", lambda move: self.updateTiles(2, 2))
+        self.master.bind("<Key>", self.keyPressed)
 
+        #pack elements
         self.others.pack(side=tk.LEFT, fill=tk.BOTH)
         self.label1.pack()
         self.button1.pack()
         self.mainFrame.pack(side=tk.LEFT, fill=tk.BOTH)
+        #mainloop
         self.master.mainloop()
 
+    #Handle key presses, because apparently, you need it
+    def keyPressed(self, event):
+        if event.char == "a":
+            self.updateTiles(20, 0)
+        if event.char == "d":
+            self.updateTiles(-20, 0)
 
 
+    def start(self):
+        pass
+
+    def updateTiles(self, offX, offY):
+        for i in range(MAPCOL):
+            for j in range(MAPROW):
+                self.tiles[i][j].updatePos(offX, offY)
 
 
-game_main = mainFrame()
+    def build(self, offX=20, offY=20):
+        for i in range(MAPROW):
+            self.tiles.append([])
+            for j in range(MAPCOL):
+                self.tiles[i].append(sprites.tile(offX, offY, "pics/grass-tile-1-64.png", self.mainFrame))
+                offX += 64
+            offX -= MAPCOL*64
+            offY += 64
+game_main = MainFrame()
